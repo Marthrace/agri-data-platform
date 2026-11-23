@@ -8,9 +8,9 @@
 
 \- Symptom: git ls-files showed .env.exampl next to .env.example
 
-\- Cause: typo while creating files with echo on the command line
+\- Cause: the first echo command wrote DB\_HOST=localhost into .env.exampl instead of .env.example, so the real file was missing that line (found by comparing file sizes: 19 bytes vs 78)
 
-\- Fix: git rm .env.exampl
+\- Fix: git rm .env.exampl, then appended DB\_HOST=localhost to .env.example
 
 \- Prevention: run git ls-files after creating files, before pushing
 
