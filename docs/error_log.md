@@ -70,3 +70,17 @@
 
 \- Prevention: run dir after creating a file to confirm it exists
 
+
+
+\## 006 - FAOSTAT download covered one year only
+
+\- Date: 23 Nov 2026
+
+\- Symptom: first file had 6 rows, all year 2024
+
+\- Cause: only one year was selected in the FAOSTAT download filter; the re-download was saved as "(1).csv" and the old file was nearly used again
+
+\- Fix: re-downloaded with all years selected; checked size and row count (90 rows, 2010 to 2024) before copying
+
+\- Prevention: check row count and year range straight after downloading
+
