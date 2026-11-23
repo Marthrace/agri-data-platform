@@ -28,3 +28,45 @@
 
 \- Prevention: check the line starts at the prompt before pressing Enter
 
+
+
+\## 003 - PostgreSQL service stopped, psql missing, access denied
+
+\- Date: 23 Nov 2026
+
+\- Symptom: psql not recognised; net start and sc delete returned System error 5
+
+\- Cause: leftover files and a stale service from an earlier, incomplete install; service commands were run in a non-administrator prompt
+
+\- Fix: ran sc delete in an administrator prompt, renamed the old folder to 17\_old, installed PostgreSQL 19 with Command Line Tools
+
+\- Prevention: check for "Administrator" in the window title before service commands; check the version folder after installing
+
+
+
+\## 004 - Duplicate DB\_HOST line in .env.example
+
+\- Date: 23 Nov 2026
+
+\- Symptom: type .env.example showed DB\_HOST=localhost twice
+
+\- Cause: the echo command that appends DB\_HOST was run twice
+
+\- Fix: manual Notepad edit did not remove it; used findstr /v to drop the lines and re-appended one
+
+\- Prevention: check with type before repeating an append command
+
+
+
+\## 005 - db\_test.py not found
+
+\- Date: 23 Nov 2026
+
+\- Symptom: python src\\utils\\db\_test.py returned Errno 2, no such file
+
+\- Cause: the file was never saved after the first Notepad attempt
+
+\- Fix: recreated it and confirmed the name with dir src\\utils
+
+\- Prevention: run dir after creating a file to confirm it exists
+
