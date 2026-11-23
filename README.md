@@ -1,0 +1,1 @@
+# Ghana Agricultural Data Platform
