@@ -84,3 +84,17 @@
 
 \- Prevention: check row count and year range straight after downloading
 
+
+
+\## 007 - Git line-ending warning on raw CSV
+
+\- Date: 23 Nov 2026
+
+\- Symptom: "LF will be replaced by CRLF" when adding data/raw files
+
+\- Cause: Git's default line-ending conversion on Windows
+
+\- Fix: .gitattributes with "data/raw/\* -text" so raw files stay byte-identical
+
+\- Prevention: add .gitattributes before committing data files
+
