@@ -35,19 +35,28 @@ def save_results(conn, run_id, checker):
         conn.execute(REJECT_SQL, rejects)
 
 
+def clean_raw_tables(conn, run_id):
+    """Read both raw tables, clean them, save the quality results.
+
+    Returns the clean prices, the clean production and the two checkers.
+    """
+    raw_prices = pd.read_sql(text("SELECT * FROM raw.wfp_prices"), conn)
+    raw_production = pd.read_sql(text("SELECT * FROM raw.faostat_production"), conn)
+
+    prices, price_checks = clean_prices(raw_prices)
+    production, production_checks = clean_production(raw_production)
+
+    save_results(conn, run_id, price_checks)
+    save_results(conn, run_id, production_checks)
+    return prices, production, price_checks, production_checks
+
+
 def main():
     engine = get_engine()
     run_id = uuid.uuid4().hex[:12]
 
     with engine.begin() as conn:
-        raw_prices = pd.read_sql(text("SELECT * FROM raw.wfp_prices"), conn)
-        raw_production = pd.read_sql(text("SELECT * FROM raw.faostat_production"), conn)
-
-        prices, price_checks = clean_prices(raw_prices)
-        production, production_checks = clean_production(raw_production)
-
-        save_results(conn, run_id, price_checks)
-        save_results(conn, run_id, production_checks)
+        prices, production, price_checks, production_checks = clean_raw_tables(conn, run_id)
 
     log.info("run %s finished", run_id)
     for checker, clean in [(price_checks, prices), (production_checks, production)]:

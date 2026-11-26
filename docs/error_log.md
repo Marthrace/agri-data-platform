@@ -98,3 +98,45 @@
 
 \- Prevention: add .gitattributes before committing data files
 
+
+
+\## 008 - ModuleNotFoundError when running the loader
+
+\- Date: 24 Nov 2026
+
+\- Symptom: No module named 'src.utils.db', then No module named 'src'
+
+\- Cause: db.py had not been created; the second time the script was run directly instead of as a module
+
+\- Fix: created src\\utils\\db.py; run with python -m src.load.load\_raw from the project root
+
+\- Prevention: run dir to confirm each file exists; always use -m for project modules
+
+
+
+\## 009 - psql password authentication failed
+
+\- Date: 26 Nov 2026
+
+\- Symptom: psql rejected the password; the same command had worked minutes earlier
+
+\- Cause: password mistyped at the hidden prompt (nothing shows while typing)
+
+\- Fix: retried slowly with Caps Lock off; confirmed .env still worked with db\_test.py
+
+\- Prevention: if psql fails but db\_test.py works, the typed password is the problem
+
+
+
+\## 010 - relation "staging.prices" does not exist
+
+\- Date: 26 Nov 2026
+
+\- Symptom: load\_staging failed with UndefinedTable
+
+\- Cause: sql\\04\_create\_staging\_tables.sql had not been run, so the tables did not exist
+
+\- Fix: ran the SQL file with psql and checked with \\dt staging.\*
+
+\- Prevention: run the SQL step and confirm the tables exist before running Python that uses them
+
