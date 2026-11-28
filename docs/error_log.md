@@ -140,3 +140,17 @@
 
 \- Prevention: run the SQL step and confirm the tables exist before running Python that uses them
 
+
+
+\## 011 - Test damage carried into analytics layer
+
+\- Date: 28 Nov 2026
+
+\- Symptom: Maize average price per kg was 3.95 retail and 3.41 wholesale instead of 3.81 and 3.25
+
+\- Cause: two staging prices set to 99 for the repair test were never repaired, so the star build copied them
+
+\- Fix: ran python -m src.run\_pipeline --start 2021-01-01 --end 2021-12-31
+
+\- Prevention: repair test damage straight away; row-count checks cannot detect changed values
+
